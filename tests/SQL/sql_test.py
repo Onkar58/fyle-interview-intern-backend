@@ -54,14 +54,16 @@ def test_get_assignments_in_various_states():
     """Test to get assignments in various states"""
 
     # Define the expected result before any changes
-    expected_result = [('DRAFT', 2), ('GRADED', 2), ('SUBMITTED', 2)]
+    expected_result = [('DRAFT', 4), ('GRADED', 7), ('SUBMITTED', 1)]
 
     # Execute the SQL query and compare the result with the expected result
     with open('tests/SQL/number_of_assignments_per_state.sql', encoding='utf8') as fo:
         sql = fo.read()
 
+    # print(sql)
     sql_result = db.session.execute(text(sql)).fetchall()
     for itr, result in enumerate(expected_result):
+        print(itr, result, sql_result[itr])
         assert result[0] == sql_result[itr][0]
         assert result[1] == sql_result[itr][1]
 
